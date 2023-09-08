@@ -2,7 +2,7 @@ import React from 'react'
 import './card.scss'
 
 const Card = ({ item }) => {
-
+  console.log("ITEM", item.title)
   return (
     <div className='product_card'>
       <div className='product_card__image'>
@@ -14,7 +14,7 @@ const Card = ({ item }) => {
         <h2>{item.title}</h2>
         <div className='product_card__info-header'>
           <p className='product_card__info-header--price'>
-            ${item.price.amount.toLocaleString('es-ES',{
+            ${item.price?.amount.toLocaleString('es-ES',{
               style: 'currency',
               currency: item.price.currency
             })}
