@@ -2,7 +2,7 @@ import React from 'react'
 import './card.scss'
 
 const Card = ({ item }) => {
-  console.log(item)
+
   return (
     <div className='product_card'>
       <div className='product_card__image'>
