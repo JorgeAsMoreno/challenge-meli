@@ -34,4 +34,46 @@ router.get('/items', async(req, res) => {
   }
 })
 
+router.get('/items/:id', async (req, res) => {
+  try {
+    const itemId = req.params.id;
+    const itemURL = `https://api.mercadolibre.com/items/${itemId}`;
+    const descriptionURL = `https://api.mercadolibre.com/items/${itemId}/description`;
+
+    const [itemResponse, descriptionResponse] = await Promise.all([
+      axios.get(itemURL),
+      axios.get(descriptionURL),
+    ]);
+
+    const itemData = itemResponse.data;
+    const descriptionData = descriptionResponse.data;
+
+    const formattedResponse = {
+      author: {
+        name: 'Jorge',
+        lastname: 'Moreno',
+      },
+      item: {
+        id: itemData.id,
+        title: itemData.title,
+        price: {
+          currency: itemData.currency_id,
+          amount: Math.floor(itemData.price),
+          decimals: (itemData.price % 1).toFixed(2),
+        },
+        picture: itemData.pictures[0]?.url || '',
+        condition: itemData.condition,
+        free_shipping: itemData.shipping.free_shipping,
+        sold_quantity: itemData.sold_quantity,
+        description: descriptionData.plain_text || '',
+      },
+    };
+
+    res.json(formattedResponse);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al consultar la API' });
+  }
+});
+
 module.exports = router;
