@@ -1,18 +1,21 @@
 import React, { useState } from 'react'
-import './App.scss';
 import axios from 'axios'
+import './App.scss';
+
 function App() {
-  const [message, setMessage] = useState('default')
-  axios.get('/api/test').then(res => {
+  const [items, setItems] = useState([])
+
+  axios.get('/api/items').then(res => {
     if (res.status === 200) {
-      setMessage(res.data)
+      console.log(res)
+      setItems(res.data)
     }
   }).catch(err => {
     console.error(err)
   })
   return (
     <div className="App">
-      <p>Mensaje desde express {message}</p>
+      <p>Mensaje desde express ss</p>
     </div>
   );
 }
