@@ -2,11 +2,11 @@ import React from 'react'
 import './card.scss'
 
 const Card = ({ item }) => {
-  console.log("ITEM", item.title)
+  const productURL = `/items/${item.id}`;
   return (
     <div className='product_card'>
       <div className='product_card__image'>
-        <a href='/' title={item.title} rel='nofollow,sponsored'>
+        <a href={productURL} title={item.title} rel='nofollow,sponsored' target='_blank'>
           <img src={item.picture} alt={item.title} />
         </a>
       </div>
