@@ -14,6 +14,7 @@ const SearchResults = ({ products }) => {
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected)
   }
+
   return (
     <>
       {

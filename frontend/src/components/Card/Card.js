@@ -12,6 +12,7 @@ const Card = ({ item }) => {
         </Link>
       </div>
       <div className='product_card__info'>
+        <p className='product_card__info-seller'>Vendido por <span>{item.seller}</span></p>
         <h2>{item.title}</h2>
         <div className='product_card__info-header'>
           <p className='product_card__info-header--price'>

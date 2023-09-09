@@ -18,13 +18,49 @@
     display: flex;
     justify-content: center;
     width: 100%;
+    position: relative;
     
+    .thumbnails {
+      height: auto;
+      overflow-y: scroll;
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-between;
+      
+      img {
+        cursor: pointer;
+        margin: 1em;
+        width: 60px;
+      }
+    }
+
     img {
       width: fit-content;
     }
-    @media screen and (max-width: 425px) {
+
+    @media screen and (max-width: 424px) {
+      flex-direction: column-reverse;
+
       img {
         width: inherit;
+      }
+    }
+
+    @media screen and (min-width: 425px) {
+      .thumbnails {
+        height: 500px;
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        left: 0;
+  
+        img {
+          cursor: pointer;
+          margin-bottom: 1em;
+          width: 60px;
+        }
       }
     }
   }

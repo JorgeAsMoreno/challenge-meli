@@ -7,6 +7,7 @@ const ProductDetails = () => {
   const { id } = useParams()
   const [product, setProduct] = useState(null)
   const [showShortDescription, setShowShortDescription] = useState(true)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
     ProductsApiClient.getProductById(id).then(response => {
@@ -16,11 +17,22 @@ const ProductDetails = () => {
     }).catch(err => console.log(err))
   }, [])
 
+  const handleThumbnailClick = (index) => {
+    setCurrentImageIndex(index)
+  };
+
   return (
     <div className='details_container'>
       <div className='details_container__info'>
         <div className='details_container__info-img'>
-          <img src={product?.picture} alt={product?.title} />
+          <div className='thumbnails'>
+            {product?.thumbnails.map((img, index) => (
+              <img key={img?.id} src={img?.url} onClick={() => handleThumbnailClick(index)} />
+            ))}
+          </div>
+          <div>
+            <img src={product?.thumbnails[currentImageIndex]?.url} alt={product?.title} />
+          </div>
         </div>
         <div className='details_container__info-detail'>
           <div className='details_container__info-detail--condition'>
