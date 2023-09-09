@@ -2,18 +2,18 @@ import React from 'react'
 import ProductsApiClient from '../../requests/requests';
 import searchIcon from '../../public/assets/search.png'
 import logoML from '../../public/assets/ml.png'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './header.scss'
 
-const Header = ({ onchange, value, searchQuery, setProducts }) => {
+const Header = ({ onchange, value, querySearch, setProducts }) => {
   const navigate = useNavigate();
 
   const handleSearch = (ev) => {
     ev.preventDefault()
-    if (searchQuery.trim() !== '') {
-      navigate(`/items?search=${searchQuery}`)
+    if (querySearch.trim() !== '') {
+      navigate(`/items?search=${querySearch}`)
 
-      ProductsApiClient.getProducts(searchQuery).then(res => {
+      ProductsApiClient.getProducts(querySearch).then(res => {
         if (res.status === 200) {
           setProducts(res.data.items)
         }
@@ -26,7 +26,9 @@ const Header = ({ onchange, value, searchQuery, setProducts }) => {
   return (
     <header className='header'>
       <div className='header_logo'>
-        <img src={logoML} alt='Mercado Libre México - Donde comprar y vender de todo' />
+        <Link to={'/'}>
+          <img src={logoML} alt='Mercado Libre México - Donde comprar y vender de todo' />
+        </Link>
       </div>
       <div className='header_form__container'>
         <form method='GET' role='search'>

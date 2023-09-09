@@ -18,7 +18,7 @@ const SearchResults = ({ products }) => {
     <>
       {
         currentProducts.length > 0 ?
-        <>
+        <div className='search_results__container'>
           {
             currentProducts.map(product => (
               <Card
@@ -38,7 +38,7 @@ const SearchResults = ({ products }) => {
             nextLabel={'Siguiente'}
             disableInitialCallback={true}
           />
-        </>
+        </div>
         : <EmptySearch />
       }
     </>
