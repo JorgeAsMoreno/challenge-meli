@@ -14,7 +14,7 @@ const ProductDetails = () => {
       }
     }).catch(err => console.log(err))
   }, [])
-  console.log(product)
+
   return (
     <div className='details_container'>
       <div className='details_container__info'>
@@ -39,6 +39,12 @@ const ProductDetails = () => {
               })}
             </p>
           </div>
+          {
+            product?.free_shipping === true ?
+            <div className='shipping'>
+              <p>Envio <b>gratis</b></p>
+            </div> : null
+          }
           <div className='buy-button'>
             <button>Comprar</button>
           </div>
