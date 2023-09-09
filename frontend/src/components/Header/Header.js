@@ -1,9 +1,27 @@
 import React from 'react'
-import './header.scss'
-import logoML from '../../public/assets/ml.png'
+import ProductsApiClient from '../../requests/requests';
 import searchIcon from '../../public/assets/search.png'
+import logoML from '../../public/assets/ml.png'
+import { useNavigate } from 'react-router-dom';
+import './header.scss'
 
-const Header = ({ onchange, value }) => {
+const Header = ({ onchange, value, searchQuery, setProducts }) => {
+  const navigate = useNavigate();
+
+  const handleSearch = (ev) => {
+    ev.preventDefault()
+    if (searchQuery.trim() !== '') {
+      navigate(`/items?search=${searchQuery}`)
+
+      ProductsApiClient.getProducts(searchQuery).then(res => {
+        if (res.status === 200) {
+          setProducts(res.data.items)
+        }
+      }).catch(err => {
+        console.error(err)
+      })
+    }
+  };
 
   return (
     <header className='header'>
@@ -19,7 +37,7 @@ const Header = ({ onchange, value }) => {
             onChange={onchange}
             value={value}
           />
-          <button type='submit'>
+          <button type='submit' onClick={(ev) => handleSearch(ev)}>
             <img src={searchIcon} alt='Mercado Libre México - Buscar productos' />
           </button>
         </form>

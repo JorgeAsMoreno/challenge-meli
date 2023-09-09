@@ -1,45 +1,30 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ProductDetails from './components/ProductDetails/ProductDetails';
+import SearchResults from './components/SearchResults/SearchResults';
+import HomeSearch from './components/HomeSearch/HomeSearch';
 import Header from './components/Header/Header';
-import Card from './components/Card/Card';
-import axios from 'axios'
 import './App.scss';
 
 function App() {
+  const [querySearch, setQuerySearch] = useState('')
   const [products, setProducts] = useState([])
-  const [search, setSearch] = useState('')
-
-  useEffect(() => {
-    axios.get(`/api/items?q=${search}`).then(res => {
-      if (res.status === 200) {
-        setProducts(res.data.items)
-      }
-    }).catch(err => {
-      console.error(err)
-    })
-  }, [search])
 
   const handleInputChange = ({ target }) => {
-    return setSearch(target.value)
+    return setQuerySearch(target.value)
   }
 
-  const productList = useMemo(() => {
-    return products.filter(e => {
-      return e.title.toString().toLowerCase().includes(search.toLowerCase())
-    })
-  }, [search, products])
-
   return (
-    <div className="App">
-      <Header value={search} onchange={handleInputChange} />
-      {
-        productList.map(product => (
-          <Card
-            key={product.id}
-            item={product}
-          />
-        ))
-      }
-    </div>
+    <Router>
+      <div>
+        <Header onchange={handleInputChange} value={querySearch} searchQuery={querySearch} {...{setProducts}} />
+        <Routes>
+          <Route path="/" exact element={<HomeSearch {...{querySearch}} />} />
+          <Route path="/items" exact element={<SearchResults {...{products}} />} />
+          <Route path="/items/:id" element={<ProductDetails />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
