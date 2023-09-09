@@ -16,14 +16,12 @@ function App() {
 
   return (
     <Router>
-      <div>
         <Header onchange={handleInputChange} value={querySearch} searchQuery={querySearch} {...{setProducts}} />
         <Routes>
           <Route path="/" exact element={<HomeSearch {...{querySearch}} />} />
           <Route path="/items" exact element={<SearchResults {...{products}} />} />
           <Route path="/items/:id" element={<ProductDetails />} />
         </Routes>
-      </div>
     </Router>
   );
 }
