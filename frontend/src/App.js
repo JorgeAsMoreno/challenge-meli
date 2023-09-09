@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProductDetails from './components/ProductDetails/ProductDetails';
 import SearchResults from './components/SearchResults/SearchResults';
 import HomeSearch from './components/HomeSearch/HomeSearch';
-import Header from './components/Header/Header';
+import Layout from './components/Layout/Layout';
 import './App.scss';
 
 function App() {
@@ -16,12 +16,13 @@ function App() {
 
   return (
     <Router>
-        <Header onchange={handleInputChange} value={querySearch} searchQuery={querySearch} {...{setProducts}} />
+      <Layout onchange={handleInputChange} value={querySearch} {...{querySearch, setProducts}}>
         <Routes>
           <Route path="/" exact element={<HomeSearch {...{querySearch}} />} />
           <Route path="/items" exact element={<SearchResults {...{products}} />} />
           <Route path="/items/:id" element={<ProductDetails />} />
         </Routes>
+      </Layout>
     </Router>
   );
 }

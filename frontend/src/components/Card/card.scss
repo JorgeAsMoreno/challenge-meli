@@ -1,6 +1,14 @@
 .product_card {
   align-items: center;
+  border-bottom: 1px solid #eeeeee;
+  cursor: pointer;
   display: flex;
+  padding: 2.725em .275em;
+  transition: .3s;
+
+  &:hover {
+    box-shadow: 4px 15px 15px 4px #3837371f;
+  }
   &__image {
     height: 160px;
     overflow: hidden;
