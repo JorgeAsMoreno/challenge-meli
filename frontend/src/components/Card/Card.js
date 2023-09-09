@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import './card.scss'
 
 const Card = ({ item }) => {
@@ -6,9 +7,9 @@ const Card = ({ item }) => {
   return (
     <div className='product_card'>
       <div className='product_card__image'>
-        <a href={productURL} title={item.title} rel='nofollow,sponsored' target='_blank'>
+        <Link to={`/items/${item.id}`}>
           <img src={item.picture} alt={item.title} />
-        </a>
+        </Link>
       </div>
       <div className='product_card__info'>
         <h2>{item.title}</h2>
