@@ -170,6 +170,19 @@
       margin: 32px 0;
     }
 
+    .show-description {
+      background-color: #eeeeee;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #3483fa;
+      font-weight: 400;
+      font-size: 1em;
+      margin-bottom: 32px;
+      padding: .475em 2em;
+      width: max-content;
+    }
+
     @media screen and (min-width: 1024px) {
       margin-left: 32px;
       margin-top: 8em;

@@ -6,6 +6,7 @@ import './productDetails.scss';
 const ProductDetails = () => {
   const { id } = useParams()
   const [product, setProduct] = useState(null)
+  const [showShortDescription, setShowShortDescription] = useState(true)
 
   useEffect(() => {
     ProductsApiClient.getProductById(id).then(response => {
@@ -52,7 +53,25 @@ const ProductDetails = () => {
       </div>
       <div className='details_container__description'>
         <p>Descripción del producto</p>
-        <h3>{product?.description}</h3>
+        {
+          product?.description.length > 200 && showShortDescription ?
+          <h3>
+            {`${product?.description.substring(
+              0,
+              200
+            )}...`}
+          </h3> :
+          <h3>{product?.description}</h3>
+        }
+        {
+          product?.description.length > 200 &&
+          <button
+            onClick={() => setShowShortDescription(prev => !prev)}
+            className='show-description'
+          >
+            {showShortDescription ? 'Leer más' : 'Leer menos'}
+          </button>
+        }
       </div>
     </div>
   )
