@@ -3,8 +3,10 @@ import Card from '../Card/Card'
 import { ITEMS_PER_PAGE } from '../../constants/constants'
 import ReactPaginate from 'react-paginate'
 import './searchResults.scss'
+import EmptySearch from '../EmptySearch/EmptySearch'
+import Loader from '../Loader/Loader'
 
-const SearchResults = ({ products }) => {
+const SearchResults = ({ products, isLoading }) => {
   const [currentPage, setCurrentPage] = useState(0)
   const startIndex = currentPage * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -17,17 +19,18 @@ const SearchResults = ({ products }) => {
 
   return (
     <>
-      {
-        currentProducts.length > 0 ?
+      {isLoading ? (
         <div className='search_results__container'>
-          {
-            currentProducts.map(product => (
-              <Card
-                key={product.id}
-                item={product}
-              />
-            ))
-          }
+          <Loader count={ITEMS_PER_PAGE} />
+          <div className='search-paginate'>
+            <Loader count={1} />
+          </div>
+        </div>
+      ) : currentProducts.length > 0 ? (
+        <div className='search_results__container'>
+          {currentProducts.map(product => (
+            <Card key={product.id} item={product} />
+          ))}
           <ReactPaginate
             pageCount={pageCount}
             pageRangeDisplayed={0}
@@ -40,16 +43,10 @@ const SearchResults = ({ products }) => {
             disableInitialCallback={true}
           />
         </div>
-        : <EmptySearch />
-      }
+      ) : (
+        <EmptySearch />
+      )}
     </>
   )
 }
-
 export default SearchResults
-
-const EmptySearch = () => {
-  return (
-    <>No hay productos para tu busqueda</>
-  )
-}

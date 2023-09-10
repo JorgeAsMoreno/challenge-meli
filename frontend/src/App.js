@@ -9,6 +9,7 @@ import './App.scss';
 function App() {
   const [querySearch, setQuerySearch] = useState('')
   const [products, setProducts] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleInputChange = ({ target }) => {
     return setQuerySearch(target.value)
@@ -16,11 +17,11 @@ function App() {
 
   return (
     <Router>
-      <Layout onchange={handleInputChange} value={querySearch} {...{querySearch, setProducts}}>
+      <Layout onchange={handleInputChange} value={querySearch} {...{querySearch, setProducts, setIsLoading}}>
         <Routes>
-          <Route path="/" exact element={<HomeSearch {...{querySearch}} />} />
-          <Route path="/items" exact element={<SearchResults {...{products}} />} />
-          <Route path="/items/:id" element={<ProductDetails />} />
+          <Route path="/" exact element={<HomeSearch {...{querySearch, setIsLoading, isLoading}} />} />
+          <Route path="/items" exact element={<SearchResults {...{products, querySearch, isLoading}} />} />
+          <Route path="/items/:id" element={<ProductDetails {...{setIsLoading, isLoading}} />} />
         </Routes>
       </Layout>
     </Router>
