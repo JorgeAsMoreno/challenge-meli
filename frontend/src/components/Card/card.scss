@@ -28,6 +28,15 @@
       font-size: 1.2em;
     }
 
+    &-seller {
+      font-size: .795em;
+      
+      span {
+        color: #3483fa;
+        font-weight: 400;
+      }
+    }
+
     &-header {
       align-items: flex-start;
       display: flex;

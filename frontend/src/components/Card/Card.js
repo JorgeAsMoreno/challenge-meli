@@ -1,9 +1,27 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import './card.scss'
+import Loader from '../Loader/Loader'
 
-const Card = ({ item }) => {
+const Card = ({ item, isLoading }) => {
+  if (isLoading) {
+    return (
+      <div className='product_card'>
+        <div className='product_card__image'>
+          <Loader count={1} />
+        </div>
+        <div className='product_card__info'>
+          <Loader count={1} />
+          <Loader count={1} />
+          <Loader count={1} />
+          <Loader count={1} />
+          <Loader count={1} />
+        </div>
+      </div>
+    );
+  }
 
+  // Si isLoading es false, muestra los datos reales del producto
   return (
     <div className='product_card'>
       <div className='product_card__image'>
@@ -12,6 +30,7 @@ const Card = ({ item }) => {
         </Link>
       </div>
       <div className='product_card__info'>
+        <p className='product_card__info-seller'>Vendido por <span>{item.seller}</span></p>
         <h2>{item.title}</h2>
         <div className='product_card__info-header'>
           <p className='product_card__info-header--price'>

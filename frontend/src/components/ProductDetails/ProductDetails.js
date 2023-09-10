@@ -2,57 +2,103 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import ProductsApiClient from '../../requests/requests';
 import './productDetails.scss';
+import Loader from '../Loader/Loader';
 
-const ProductDetails = () => {
+const ProductDetails = ({ isLoading, setIsLoading }) => {
   const { id } = useParams()
   const [product, setProduct] = useState(null)
+  const [showShortDescription, setShowShortDescription] = useState(true)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
+    setIsLoading(true)      
     ProductsApiClient.getProductById(id).then(response => {
       if (response.status === 200) {
         setProduct(response.data.item)
+        setIsLoading(false)
       }
     }).catch(err => console.log(err))
-  }, [])
+  
+  }, [id])
+
+  const handleThumbnailClick = (index) => {
+    setCurrentImageIndex(index)
+  };
 
   return (
     <div className='details_container'>
-      <div className='details_container__info'>
-        <div className='details_container__info-img'>
-          <img src={product?.picture} alt={product?.title} />
-        </div>
-        <div className='details_container__info-detail'>
-          <div className='details_container__info-detail--condition'>
+      {isLoading ? (
+        <Loader count={1} />
+      ) : product ? (
+        <div className='details_container__info'>
+          <div className='details_container__info-img'>
+            <div className='thumbnails'>
+              {product?.thumbnails.map((img, index) => (
+                <img key={img?.id} loading='lazy' src={img?.url} onClick={() => handleThumbnailClick(index)} />
+              ))}
+            </div>
+            <div>
+              <img src={product?.thumbnails[currentImageIndex]?.url} alt={product?.title} loading='lazy' />
+            </div>
+          </div>
+          <div className='details_container__info-detail'>
+            <div className='details_container__info-detail--condition'>
+              {
+                product?.condition === 'new' ?
+                <b>Nuevo</b> : <p>Usado</p>
+              }
+              <span>-</span>
+              <p>{product?.sold_quantity} vendidos</p>
+            </div>
+            <div className='product-title'>
+              <h2>{product?.title}</h2>
+              <p>
+                ${product?.price?.amount.toLocaleString('es-ES',{
+                  style: 'currency',
+                  currency: product?.price.currency
+                })}
+              </p>
+            </div>
             {
-              product?.condition === 'new' ?
-              <b>Nuevo</b> : <p>Usado</p>
+              product?.free_shipping === true ?
+              <div className='shipping'>
+                <p>Envio <b>gratis</b></p>
+              </div> : null
             }
-            <span>-</span>
-            <p>{product?.sold_quantity} vendidos</p>
-          </div>
-          <div className='product-title'>
-            <h2>{product?.title}</h2>
-            <p>
-              ${product?.price?.amount.toLocaleString('es-ES',{
-                style: 'currency',
-                currency: product?.price.currency
-              })}
-            </p>
-          </div>
-          {
-            product?.free_shipping === true ?
-            <div className='shipping'>
-              <p>Envio <b>gratis</b></p>
-            </div> : null
-          }
-          <div className='buy-button'>
-            <button>Comprar</button>
+            <div className='buy-button'>
+              <button>Comprar</button>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div>No se pudo cargar el producto.</div>
+      )}
       <div className='details_container__description'>
-        <p>Descripción del producto</p>
-        <h3>{product?.description}</h3>
+        {isLoading ? (
+          <Loader count={1} />
+        ) : (
+          <>
+            <p>Descripción del producto</p>
+            {product?.description.length > 200 && showShortDescription ? (
+              <h3>
+                {`${product?.description.substring(
+                  0,
+                  200
+                )}...`}
+              </h3>
+            ) : (
+              <h3>{product?.description}</h3>
+            )}
+            {product?.description.length > 200 && (
+              <button
+                onClick={() => setShowShortDescription(prev => !prev)}
+                className='show-description'
+              >
+                {showShortDescription ? 'Leer más' : 'Leer menos'}
+              </button>
+            )}
+          </>
+        )}
       </div>
     </div>
   )
