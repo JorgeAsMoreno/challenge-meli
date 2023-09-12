@@ -4,7 +4,7 @@ import ProductsApiClient from '../../requests/requests';
 import './productDetails.scss';
 import Loader from '../Loader/Loader';
 
-const ProductDetails = ({ isLoading, setIsLoading }) => {
+const ProductDetails = ({ isLoading, setIsLoading, formattedCategories }) => {
   const { id } = useParams()
   const [product, setProduct] = useState(null)
   const [showShortDescription, setShowShortDescription] = useState(true)
@@ -17,7 +17,7 @@ const ProductDetails = ({ isLoading, setIsLoading }) => {
         setProduct(response.data.item)
         setIsLoading(false)
       }
-    }).catch(err => console.log(err))
+    }).catch(err => console.error(err))
   
   }, [id])
 

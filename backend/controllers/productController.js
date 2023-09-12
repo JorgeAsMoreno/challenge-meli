@@ -18,10 +18,9 @@ const getProducts = async(req, res, next) => {
   try {
     const query = req.query.q
     const response = await axios.get(`${BASE_URL}/sites/MLA/search?q=${query}`)
-
     const formattedResponse = {
       author: author,
-      categories: [],
+      categories: response.data.filters[0]?.values[0]?.path_from_root.map((category) => category.name) || [],
       items: response.data.results.map(item => ({
         id: item.id,
         title: item.title,
@@ -33,7 +32,8 @@ const getProducts = async(req, res, next) => {
         picture: item.thumbnail,
         condition: item.condition,
         free_shipping: item.shipping.free_shipping,
-        seller: item.seller.nickname,
+        seller_name: item.seller.nickname,
+        seller_city: item.seller_address.city.name
       })),
     }
     res.json(formattedResponse)
@@ -59,12 +59,12 @@ const getProductById = async (req, res, next) => {
       axios.get(itemURL),
       axios.get(descriptionURL),
     ]);
-
     const itemData = itemResponse.data;
     const descriptionData = descriptionResponse.data;
 
     const formattedResponse = {
       author: author,
+      categories: itemResponse.data || [],
       item: {
         id: itemData.id,
         title: itemData.title,

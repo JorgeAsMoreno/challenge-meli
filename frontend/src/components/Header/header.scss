@@ -1,6 +1,8 @@
+@import '../../variables.scss';
+
 .header {
   align-items: center;
-  background-color: #fff159;
+  background-color: $yellow-color;
   display: flex;
   padding: 1em;
 
@@ -18,13 +20,10 @@
     }
 
     input {
-      border-style: solid;
-      border-color: rgba(0,0,0,0);
-      border-width: 1.5px;
-      border-radius: 2px;
-      background-color: #fff;
-      box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
-      color: #333;
+      border: 0;
+      border-radius: 4px;
+      background-color: $white-color;
+      color: $dark-gray-color;
       display: flex;
       font-size: 16px;
       margin: 0;
@@ -49,7 +48,7 @@
 
       &::before {
         content: "";
-        border-left: 1px solid #e6e6e6;
+        border-left: 1px solid $light-gray-color;
         display: block;
         height: 26px;
         margin-right: 1em;
