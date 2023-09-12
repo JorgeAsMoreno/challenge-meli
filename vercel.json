@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/**": {
+      "handler": "api/*.js"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:any*",
+      "destination": "/.vercel/functions/:any*"
+    }
+  ]
+}
