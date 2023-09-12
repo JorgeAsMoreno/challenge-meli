@@ -8,13 +8,17 @@ const HomeSearch = ({ querySearch, isLoading, setIsLoading }) => {
 
   useEffect(() => {
     setIsLoading(true)
-    ProductsApiClient.getProducts().then(res => {
+    ProductsApiClient.getProducts()
+    .then(res => {
       if (res.status === 200) {
         setProducts(res.data.items)
-        setIsLoading(false)
       }
-    }).catch(err => {
+    })
+    .catch(err => {
       console.error(err)
+    })
+    .finally(() => {
+      setIsLoading(false)
     })
   }, [])
 
@@ -25,18 +29,13 @@ const HomeSearch = ({ querySearch, isLoading, setIsLoading }) => {
   }, [querySearch, products])
 
   return (
-    <>
-      {
-        productList.length > 0 ?
-        productList.map(product => (
-          <Card
-            key={product.id}
-            item={product}
-            isLoading={isLoading}
-          />
-        )) : !isLoading && <EmptySearch {...{querySearch}} />
-      }
-    </>
+    <div>
+      {productList.length > 0 && !isLoading
+      ? productList.map(product => (
+          <Card key={product.id} item={product} {...{isLoading}} />
+        ))
+      : !isLoading && <EmptySearch {...{querySearch}} />}
+    </div>
   )
 }
 

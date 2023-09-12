@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .search_results__container {
   padding: 2em 0;
 }
@@ -15,17 +17,17 @@
   }
 
   .next, .previous {
-    color: #3483fa;
+    color: $blue-color;
     cursor: pointer;
     transition: .3s;
     padding: .5em 1em;
     &:hover {
-      background-color: #eeeeee;
+      background-color: $light-gray-color;
     }
   }
 
   .active {
-    background-color: #eeeeee;
+    background-color: $light-gray-color;
     border-radius: 4px;
     font-weight: bold;
     font-size: 1em;

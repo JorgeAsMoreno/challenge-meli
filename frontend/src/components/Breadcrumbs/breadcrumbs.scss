@@ -1,0 +1,25 @@
+@import '../../variables.scss';
+
+.breadcrumbs-container {
+  align-items: center;
+  display: flex;
+  position: absolute;
+  margin-top: -2em;
+
+  a {
+    color: $gray-color;
+    cursor: pointer;
+    margin: 0;
+    text-decoration: none;
+    transition: .3s;
+  
+    &:hover {
+      color: $dark-gray-color;
+    }
+  }
+
+  &-arrow {
+    font-weight: bold;
+    margin-right: .475em;
+  }
+}

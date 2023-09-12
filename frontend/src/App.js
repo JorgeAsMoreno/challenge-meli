@@ -5,23 +5,26 @@ import SearchResults from './components/SearchResults/SearchResults';
 import HomeSearch from './components/HomeSearch/HomeSearch';
 import Layout from './components/Layout/Layout';
 import './App.scss';
+import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
 
 function App() {
   const [querySearch, setQuerySearch] = useState('')
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [categories, setCategories] = useState([])
 
   const handleInputChange = ({ target }) => {
-    return setQuerySearch(target.value)
+    setQuerySearch(target.value)
   }
 
   return (
     <Router>
-      <Layout onchange={handleInputChange} value={querySearch} {...{querySearch, setProducts, setIsLoading}}>
+      <Layout onSearchChange={handleInputChange} {...{querySearch, setProducts, setIsLoading, setCategories, setQuerySearch}}>
+        <Breadcrumbs {...{categories, setProducts, setCategories}} />
         <Routes>
           <Route path="/" exact element={<HomeSearch {...{querySearch, setIsLoading, isLoading}} />} />
-          <Route path="/items" exact element={<SearchResults {...{products, querySearch, isLoading}} />} />
-          <Route path="/items/:id" element={<ProductDetails {...{setIsLoading, isLoading}} />} />
+          <Route path="/items" exact element={<SearchResults {...{products, querySearch, isLoading, categories}} />} />
+          <Route path="/items/:id" element={<ProductDetails {...{setIsLoading, isLoading, categories}} />} />
         </Routes>
       </Layout>
     </Router>

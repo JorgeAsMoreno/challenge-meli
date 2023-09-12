@@ -1,19 +1,17 @@
 import React from 'react';
-import Header from '../Header/Header';
 import './layout.scss'
-const Layout = ({ onchange, value, querySearch, setProducts, children, setIsLoading }) => {
+import Header from '../Header/Header';
+
+const Layout = (props) => {
   return (
-    <>
+    <div>
       <Header
-        {...{setProducts, querySearch}}
-        onchange={onchange}
-        value={value}
-        setIsLoading={setIsLoading}
+        {...props}
       />
-      <div className='children-container'>
-        {children}
-      </div>
-    </>
+      <main className='children-container'>
+        {props.children}
+      </main>
+    </div>
   )
 }
 
