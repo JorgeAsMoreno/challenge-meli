@@ -55,22 +55,23 @@ al hacer click sobre uno de ellos, debería navegar a la vista de Detalle de Pro
 
 ### Especificaciones extra del proyecto
 
-### Generales
+#### Generales
 - Se manejo un Layout que contenga toda la app un Header y un footer
 - Las vistas son responsivas
-- Se trataron de hacer funcionalidades pequeñas pero que reflejen su proposito como hooks ('useMemo, useReducer')
 
-### Busqueda
+#### Busqueda
 
 - Aqui para hacer mas dinamico el programa se consulto a la api con el query de 'Apple' los cuales se pueden filtrar en el input de busqueda agregando esa funconalidad extra asi tambien manejando un estado de 'Busqueda sin resultados', los resultados mostrados tambien pueden llevar a la pagina de detalle del producto seleccionado
+-  Se agregaron mas porpiedades a la card, como iconos, colores y propiedades del producto
 
-### Resultados de busqueda
+#### Resultados de busqueda
 
-- En los resultados de busqueda se pedia que solo regresaran 4 items, se me ocurrio que en lugar de solo tener 4 items agregar una paginacion de esos 4 resultados por pagina asi como agregarle mas porpiedades a la card, como iconos, colores y propiedades del producto
+- En los resultados de busqueda se pedia que solo regresaran 4 items, se me ocurrio que en lugar de solo tener 4 items agregar una paginacion de esos 4 resultados por pagina asi como de igual manera se agregaron mas porpiedades a la card, como iconos, colores y propiedades del producto
 - Se agregaron las breadcrumbs que se muestran dependiendo si el producto buscado esta contenido en alguna categoria
 - Se agrego un Loader a las cards para manejar el estado de carga de consulta
 - Se formatea la URL
 
-### Detalle de producto
+#### Detalle de producto
 - Se manejo el estado de la descripcion ya que en algunos casos era demasiado extensa haciendolo mas dinamico
 - Se agregaron thumbnails dinamicas las cuales toman el rol de imagen principal al hacer click sobre alguna
+- Tambien se implemento un Loader 
