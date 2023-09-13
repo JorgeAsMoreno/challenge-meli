@@ -1,43 +1,53 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import ProductsApiClient from '../../requests/requests';
+import { useParams } from 'react-router-dom'
+import ProductsApiClient from '../../requests/requests'
 import './productDetails.scss';
-import Loader from '../Loader/Loader';
+import Loader from '../Loader/Loader'
 
-const ProductDetails = ({ isLoading, setIsLoading }) => {
+const ProductDetails = ({ event, updateEvent }) => {
   const { id } = useParams()
   const [product, setProduct] = useState(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
-    setIsLoading(true)      
+    updateEvent({isLoading: true })
+
     ProductsApiClient.getProductById(id).then(response => {
       if (response.status === 200) {
         setProduct(response.data.item)
-        setIsLoading(false)
+        updateEvent({isLoading: false })
       }
     }).catch(err => console.error(err))
-  
   }, [id])
 
   const handleThumbnailClick = (index) => {
     setCurrentImageIndex(index)
-  };
+  }
 
   return (
     <div className='details_container'>
-      {isLoading ? (
+      {event.isLoading ? (
         <Loader count={1} />
       ) : product ? (
         <div className='details_container__info'>
           <div className='details_container__info-img'>
             <div className='thumbnails'>
               {product?.thumbnails.map((img, index) => (
-                <img key={img?.id} loading='lazy' src={img?.url} onClick={() => handleThumbnailClick(index)} />
+                <img
+                  key={img?.id}
+                  loading='lazy'
+                  src={img?.url}
+                  onClick={() => handleThumbnailClick(index)}
+                  alt={product.title}
+                />
               ))}
             </div>
             <div>
-              <img src={product?.thumbnails[currentImageIndex]?.url} alt={product?.title} loading='lazy' />
+              <img
+                src={product?.thumbnails[currentImageIndex]?.url}
+                alt={product?.title}
+                loading='lazy'
+              />
             </div>
           </div>
           <div className='details_container__info-detail'>
@@ -79,7 +89,8 @@ const ProductDetails = ({ isLoading, setIsLoading }) => {
         <div>No se pudo cargar el producto.</div>
       )}
       <Description
-        {...{isLoading, product}}
+        {...{product}}
+        isLoading={event.isLoading}
       />
     </div>
   )

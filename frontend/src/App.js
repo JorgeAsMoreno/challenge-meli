@@ -1,34 +1,36 @@
-import React, { useState } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ProductDetails from './components/ProductDetails/ProductDetails';
-import SearchResults from './components/SearchResults/SearchResults';
-import HomeSearch from './components/HomeSearch/HomeSearch';
-import Layout from './components/Layout/Layout';
-import './App.scss';
-import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
+import React, { useReducer } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import './App.scss'
+import ProductDetails from './components/ProductDetails/ProductDetails'
+import SearchResults from './components/SearchResults/SearchResults'
+import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs'
+import HomeSearch from './components/HomeSearch/HomeSearch'
+import Layout from './components/Layout/Layout'
 
 function App() {
-  const [querySearch, setQuerySearch] = useState('')
-  const [products, setProducts] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [categories, setCategories] = useState([])
+  const [event, updateEvent] = useReducer(
+    (prev, next) => {
+      return {...prev, ...next}
+    },
+    { querySearch: '', products: [], isLoading: false, categories: [] }
+  )
 
   const handleInputChange = ({ target }) => {
-    setQuerySearch(target.value)
+    updateEvent({ querySearch: target.value })
   }
 
   return (
     <Router>
-      <Layout onSearchChange={handleInputChange} {...{querySearch, setProducts, setIsLoading, setCategories, setQuerySearch}}>
-        <Breadcrumbs {...{categories, setProducts, setCategories}} />
+      <Layout onSearchChange={handleInputChange} {...{event, updateEvent}}>
+        <Breadcrumbs {...{event, updateEvent}} />
         <Routes>
-          <Route path="/" exact element={<HomeSearch {...{querySearch, setIsLoading, isLoading}} />} />
-          <Route path="/items" exact element={<SearchResults {...{products, isLoading}} />} />
-          <Route path="/items/:id" element={<ProductDetails {...{setIsLoading, isLoading}} />} />
+          <Route path="/" exact element={<HomeSearch {...{event, updateEvent}} />} />
+          <Route path="/items" exact element={<SearchResults {...{event, updateEvent}} />} />
+          <Route path="/items/:id" element={<ProductDetails {...{event, updateEvent}} />} />
         </Routes>
       </Layout>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

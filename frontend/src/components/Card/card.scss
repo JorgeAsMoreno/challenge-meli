@@ -11,12 +11,13 @@
   &:hover {
     box-shadow: 4px 15px 15px 4px $shadow-color;
   }
+
   &__image {
     height: 160px;
     overflow: hidden;
     padding: 0 24px;
     width: 160px;
-    
+
     img, a {
       cursor: grab;
       width: -webkit-fill-available;
@@ -28,7 +29,7 @@
 
     &-seller {
       font-size: .795em;
-      
+
       span {
         color: $blue-color;
         font-weight: 400;
@@ -40,7 +41,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      
+
       h2 {
         font-weight: 300;
         font-size: 1.2em;
@@ -72,17 +73,17 @@
         font-size: 1.3em;
         margin: 0;
       }
-  
+
       &--shipping {
         align-items: center;
         display: flex;
         color: $green-color;
         margin: 1.275em 0 0 0;
-  
+
         b {
           margin-left: .275em;
         }
-  
+
         &::before {
           background-image: url('../../public/assets/shipping.png');
           background-repeat: no-repeat;
@@ -109,6 +110,7 @@
         }
       }
     }
+
     &-conditions--new {
       align-items: center;
       display: flex;
@@ -137,5 +139,4 @@
       }
     }
   }
-
 }

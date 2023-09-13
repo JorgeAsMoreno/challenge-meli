@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import Card from '../Card/Card';
-import { ITEMS_PER_PAGE } from '../../constants/constants';
-import ReactPaginate from 'react-paginate';
-import './searchResults.scss';
-import EmptySearch from '../EmptySearch/EmptySearch';
-import Loader from '../Loader/Loader';
+import React, { useState } from 'react'
+import { ITEMS_PER_PAGE } from '../../constants/constants'
+import ReactPaginate from 'react-paginate'
+import './searchResults.scss'
+import EmptySearch from '../EmptySearch/EmptySearch'
+import Loader from '../Loader/Loader'
+import Card from '../Card/Card'
 
-const SearchResults = ({ products, isLoading }) => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const startIndex = currentPage * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentProducts = products.slice(startIndex, endIndex);
-  const pageCount = Math.ceil(products.length / ITEMS_PER_PAGE);
+const SearchResults = ({ event }) => {
+  const [currentPage, setCurrentPage] = useState(0)
+  const startIndex = currentPage * ITEMS_PER_PAGE
+  const endIndex = startIndex + ITEMS_PER_PAGE
+  const currentProducts = event.products.slice(startIndex, endIndex)
+  const pageCount = Math.ceil(event.products.length / ITEMS_PER_PAGE)
 
   const handlePageChange = ({ selected }) => {
-    setCurrentPage(selected);
+    setCurrentPage(selected)
   }
 
   return (
     <div>
-      {isLoading ? (
+      {event.isLoading ? (
         <div className="search_results__container">
           <Loader count={ITEMS_PER_PAGE} />
           <div className="search-paginate">
@@ -52,4 +52,4 @@ const SearchResults = ({ products, isLoading }) => {
   )
 }
 
-export default SearchResults;
+export default SearchResults
