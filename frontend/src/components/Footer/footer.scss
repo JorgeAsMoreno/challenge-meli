@@ -1,0 +1,95 @@
+@import '../../variables.scss';
+
+.footer_container {
+  background-color: $white-color;
+  padding: 1em;
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-top: 32px;
+    padding: 0;
+
+    a {
+      color: $dark-gray-color;
+      font-size: .825em;
+      margin-right: 16px;
+      opacity: 0.7;
+      text-decoration: none;
+    }
+  }
+
+  small {
+    color: $dark-gray-color;
+    font-size: .725em;
+    opacity: 0.6;
+  }
+
+  @media screen and (min-width: 1024px) {
+    padding: 2em 4em;
+  }
+}
+
+.footerCards_container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__card {
+    margin: 1em;
+    position: relative;
+    text-align: center;
+    width:auto;
+
+    h3 {
+      color: $dark-gray-color;
+      font-size: 1.275em;
+      font-weight: 300;
+    }
+
+    p {
+      color: $dark-gray-color;
+      font-weight: 500;
+      font-size: 1em;
+      max-width: 300px;
+      margin: 0 auto;
+      opacity: 0.6;
+      margin-bottom: 16px;
+    }
+
+    a {
+      color: $blue-color;
+      text-decoration: none;
+      font-size: .875em;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    flex-direction: row;
+
+    &__card {
+      width: 33.33%;
+
+      &:nth-child(2) {
+        &::after {
+          border: 1px solid $light-gray-color;
+          content: "";
+          height: 5em;
+          position: absolute;
+          right: -1em;
+          top: 2em;
+        }
+        &::before {
+          border: 1px solid $light-gray-color;
+          content: "";
+          height: 5em;
+          left: -1em;
+          position: absolute;
+          top: 2em;
+        }
+      }
+    }
+  }
+}
