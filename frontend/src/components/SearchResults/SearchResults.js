@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import { ITEMS_PER_PAGE } from '../../constants/constants';
 import ReactPaginate from 'react-paginate';
@@ -6,7 +6,7 @@ import './searchResults.scss';
 import EmptySearch from '../EmptySearch/EmptySearch';
 import Loader from '../Loader/Loader';
 
-const SearchResults = ({ products, isLoading, formattedCategories }) => {
+const SearchResults = ({ products, isLoading, querySearch, setProducts, setCategories }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const startIndex = currentPage * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -15,7 +15,7 @@ const SearchResults = ({ products, isLoading, formattedCategories }) => {
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
-  };
+  }
 
   return (
     <div>

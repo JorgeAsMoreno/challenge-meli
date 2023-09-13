@@ -1,42 +1,26 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import './header.scss'
-import ProductsApiClient from '../../requests/requests';
 import searchIcon from '../../public/assets/search.png'
 import logoML from '../../public/assets/ml.png'
 import { formatQueryString } from '../../utils/formatQuery';
+import getProducts from '../../utils/getProducts';
 
-const Header = ({ onSearchChange, querySearch, setProducts, setIsLoading, setCategories, setQuerySearch }) => {
+const Header = ({ onSearchChange, querySearch, setProducts, setIsLoading, setCategories }) => {
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const lastSearchQuery = localStorage.getItem('query');
-    if (lastSearchQuery) {
-      setQuerySearch(lastSearchQuery);
-    }
-  }, []);
-
 
   const handleSearch = async (ev) => {
     ev.preventDefault()
-    if (querySearch.trim() === '') {
-      return
-    }
+    setIsLoading(true)
 
-    try {
-      localStorage.setItem('query', querySearch)
-      setIsLoading(true)
+    getProducts(querySearch).then(res => {
       navigate(`/items?search=${formatQueryString(querySearch)}`)
-      const res = await ProductsApiClient.getProducts(querySearch)
-
-      if (res.status === 200) {
-        setCategories(res.data.categories)
-        setProducts(res.data.items)
-        setIsLoading(false)
-      }
-    } catch (err) {
-      console.error(err)
-    }
+      setCategories(res.data.categories)
+      setProducts(res.data.items)
+      setIsLoading(false)
+    }).catch(error => {
+      console.error(error)
+    })
   }
 
   return (

@@ -1,24 +1,19 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import ProductsApiClient from '../../requests/requests'
 import Card from '../Card/Card'
 import EmptySearch from '../EmptySearch/EmptySearch'
+import getProducts from '../../utils/getProducts'
 
 const HomeSearch = ({ querySearch, isLoading, setIsLoading }) => {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
     setIsLoading(true)
-    ProductsApiClient.getProducts()
-    .then(res => {
-      if (res.status === 200) {
-        setProducts(res.data.items)
-      }
+    getProducts('all').then(res => {
+      setIsLoading(false)
+      setProducts(res.data.items)
     })
     .catch(err => {
       console.error(err)
-    })
-    .finally(() => {
-      setIsLoading(false)
     })
   }, [])
 

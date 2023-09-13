@@ -23,8 +23,8 @@ function App() {
         <Breadcrumbs {...{categories, setProducts, setCategories}} />
         <Routes>
           <Route path="/" exact element={<HomeSearch {...{querySearch, setIsLoading, isLoading}} />} />
-          <Route path="/items" exact element={<SearchResults {...{products, querySearch, isLoading, categories}} />} />
-          <Route path="/items/:id" element={<ProductDetails {...{setIsLoading, isLoading, categories}} />} />
+          <Route path="/items" exact element={<SearchResults {...{products, querySearch, isLoading, setProducts, setCategories}} />} />
+          <Route path="/items/:id" element={<ProductDetails {...{setIsLoading, isLoading}} />} />
         </Routes>
       </Layout>
     </Router>

@@ -1,8 +1,8 @@
 import React from 'react';
 import './breadcrumbs.scss'
-import ProductsApiClient from '../../requests/requests';
 import { useNavigate } from 'react-router-dom';
 import { formatQueryString } from '../../utils/formatQuery';
+import getProducts from '../../utils/getProducts';
 
 const Breadcrumbs = ({ categories, setProducts, setCategories }) => {
   const navigate = useNavigate()
@@ -10,22 +10,13 @@ const Breadcrumbs = ({ categories, setProducts, setCategories }) => {
   const handleBreadcrumbSearch = async (ev, category) => {
     ev.preventDefault()
 
-    if (category.trim() === '') {
-      return
-    }
-  
-    try {
-      localStorage.setItem('query', category)
+    getProducts(category).then(res => {
       navigate(`/items?search=${category}`)
-      const res = await ProductsApiClient.getProducts(category)
-  
-      if (res.status === 200) {
-        setCategories(res.data.categories)
-        setProducts(res.data.items)
-      }
-    } catch (err) {
-      console.error(err)
-    }
+      setCategories(res.data.categories)
+      setProducts(res.data.items)
+    }).catch(error => {
+      console.error(error)
+    })
   }
 
   return (

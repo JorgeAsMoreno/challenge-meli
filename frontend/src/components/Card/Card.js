@@ -4,7 +4,6 @@ import './card.scss'
 import Loader from '../Loader/Loader'
 
 const Card = ({ item, isLoading }) => {
-  console.log("ID: ", item.id)
   const renderLoader = () => (
     <div className='product_card'>
       <div className='product_card__image'>

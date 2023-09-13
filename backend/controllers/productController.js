@@ -64,7 +64,6 @@ const getProductById = async (req, res, next) => {
 
     const formattedResponse = {
       author: author,
-      categories: itemResponse.data || [],
       item: {
         id: itemData.id,
         title: itemData.title,
@@ -79,6 +78,7 @@ const getProductById = async (req, res, next) => {
         sold_quantity: itemData.sold_quantity,
         thumbnails: itemData.pictures,
         description: descriptionData.plain_text || '',
+        warranty: itemData.warranty,
       },
     }
     res.json(formattedResponse)

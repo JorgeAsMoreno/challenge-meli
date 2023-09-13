@@ -4,7 +4,7 @@ import ProductsApiClient from '../../requests/requests';
 import './productDetails.scss';
 import Loader from '../Loader/Loader';
 
-const ProductDetails = ({ isLoading, setIsLoading, formattedCategories }) => {
+const ProductDetails = ({ isLoading, setIsLoading }) => {
   const { id } = useParams()
   const [product, setProduct] = useState(null)
   const [showShortDescription, setShowShortDescription] = useState(true)
@@ -65,6 +65,12 @@ const ProductDetails = ({ isLoading, setIsLoading, formattedCategories }) => {
                 <p>Envio <b>gratis</b></p>
               </div> : null
             }
+            {
+              product?.warranty !== '' ?
+              <div>
+                <p>{product?.warranty}</p>
+              </div> : null
+            }
             <div className='buy-button'>
               <button>Comprar</button>
             </div>
@@ -73,35 +79,43 @@ const ProductDetails = ({ isLoading, setIsLoading, formattedCategories }) => {
       ) : (
         <div>No se pudo cargar el producto.</div>
       )}
-      <div className='details_container__description'>
-        {isLoading ? (
-          <Loader count={1} />
-        ) : (
-          <>
-            <p>Descripción del producto</p>
-            {product?.description.length > 200 && showShortDescription ? (
-              <h3>
-                {`${product?.description.substring(
-                  0,
-                  200
-                )}...`}
-              </h3>
-            ) : (
-              <h3>{product?.description}</h3>
-            )}
-            {product?.description.length > 200 && (
-              <button
-                onClick={() => setShowShortDescription(prev => !prev)}
-                className='show-description'
-              >
-                {showShortDescription ? 'Leer más' : 'Leer menos'}
-              </button>
-            )}
-          </>
-        )}
-      </div>
+      <Description
+        {...{isLoading, product, showShortDescription, showShortDescription}}
+      />
     </div>
   )
 }
 
 export default ProductDetails
+
+const Description = ({ showShortDescription, product, setShowShortDescription, isLoading }) => {
+  return (
+    <div className='details_container__description'>
+      {isLoading ? (
+        <Loader count={1} />
+      ) : (
+        <>
+          <p>Descripción del producto</p>
+          {product?.description.length > 200 && showShortDescription ? (
+            <h3>
+              {`${product?.description.substring(
+                0,
+                200
+              )}...`}
+            </h3>
+          ) : (
+            <h3>{product?.description}</h3>
+          )}
+          {product?.description.length > 200 && (
+            <button
+              onClick={() => setShowShortDescription(prev => !prev)}
+              className='show-description'
+            >
+              {showShortDescription ? 'Leer más' : 'Leer menos'}
+            </button>
+          )}
+        </>
+      )}
+    </div>
+  )
+}
