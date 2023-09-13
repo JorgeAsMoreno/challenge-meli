@@ -10,14 +10,16 @@ const Header = ({ event, updateEvent, onSearchChange }) => {
   const navigate = useNavigate()
 
   const handleSearch = async (ev) => {
-    ev.preventDefault()
     updateEvent({ isLoading: true })
+    ev.preventDefault()
 
     getProducts(event.querySearch).then(res => {
       navigate(`/items?search=${formatQueryString(event.querySearch)}`)
-      updateEvent({ categories: res.data.categories })
-      updateEvent({ products: res.data.items })
-      updateEvent({ isLoading: false })
+      updateEvent({
+        categories: res.data.categories,
+        products: res.data.items,
+        isLoading: false,
+      })
     }).catch(error => {
       console.error(error)
     })

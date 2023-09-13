@@ -10,12 +10,12 @@ const ProductDetails = ({ event, updateEvent }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
-    updateEvent({isLoading: true })
+    updateEvent({ isLoading: true })
 
     ProductsApiClient.getProductById(id).then(response => {
       if (response.status === 200) {
         setProduct(response.data.item)
-        updateEvent({isLoading: false })
+        updateEvent({ isLoading: false })
       }
     }).catch(err => console.error(err))
   }, [id])
