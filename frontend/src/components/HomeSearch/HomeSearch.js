@@ -8,9 +8,11 @@ const HomeSearch = ({ event, updateEvent }) => {
   useEffect(() => {
     updateEvent({ isLoading: true })
 
-    getProducts('all').then(res => {
-      updateEvent({ isLoading: false })
-      updateEvent({ products: res.data.items })
+    getProducts('apple').then(res => {
+      updateEvent({
+        isLoading: false,
+        products: res.data.items
+      })
     }).catch(err => {
       console.error(err)
     })

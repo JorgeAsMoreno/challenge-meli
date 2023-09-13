@@ -12,8 +12,10 @@ const Breadcrumbs = ({ event, updateEvent }) => {
 
     getProducts(category).then(res => {
       navigate(`/items?search=${category}`)
-      updateEvent({ categories: res.data.categories})
-      updateEvent({ products: res.data.items })
+      updateEvent({
+        categories: res.data.categories,
+        products: res.data.items
+      })
     }).catch(error => {
       console.error(error)
     })
