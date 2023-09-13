@@ -1,6 +1,6 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import Card from './Card';
+import React from 'react'
+import { render, screen } from '@testing-library/react'
+import Card from './Card'
 
 test('Card muestra correctamente las props', () => {
   const item = {
@@ -12,11 +12,10 @@ test('Card muestra correctamente las props', () => {
     },
     free_shipping: true,
     condition: 'new',
-  };
+  }
 
-  render(<Card item={item} />);
+  render(<Card item={item} />)
 
-  const titleElement = screen.getByText('Producto de prueba');
-  expect(titleElement).toBeInTheDocument();
-
-});
+  const titleElement = screen.getByText('Producto de prueba')
+  expect(titleElement).toBeInTheDocument()
+})

@@ -1,35 +1,39 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import Card from '../Card/Card'
+import React, { useEffect, useMemo } from 'react'
 import EmptySearch from '../EmptySearch/EmptySearch'
 import getProducts from '../../utils/getProducts'
+import Card from '../Card/Card'
 
-const HomeSearch = ({ querySearch, isLoading, setIsLoading }) => {
-  const [products, setProducts] = useState([])
+const HomeSearch = ({ event, updateEvent }) => {
 
   useEffect(() => {
-    setIsLoading(true)
+    updateEvent({ isLoading: true })
+
     getProducts('all').then(res => {
-      setIsLoading(false)
-      setProducts(res.data.items)
-    })
-    .catch(err => {
+      updateEvent({ isLoading: false })
+      updateEvent({ products: res.data.items })
+    }).catch(err => {
       console.error(err)
     })
   }, [])
 
   const productList = useMemo(() => {
-    return products.filter(e => {
-      return e.title.toString().toLowerCase().includes(querySearch.toLowerCase())
+    return event.products.filter(e => {
+      return e.title.toString().toLowerCase().includes(event.querySearch.toLowerCase())
     })
-  }, [querySearch, products])
+  }, [event.querySearch, event.products])
 
   return (
     <div>
-      {productList.length > 0 && !isLoading
+      {productList.length > 0 && !event.isLoading
       ? productList.map(product => (
-          <Card key={product.id} item={product} {...{isLoading}} />
+          <Card
+            key={product.id}
+            item={product}
+            isLoading={event.isLoading}
+          />
         ))
-      : !isLoading && <EmptySearch {...{querySearch}} />}
+      : !event.isLoading &&
+        <EmptySearch querySearch={event.querySearch} />}
     </div>
   )
 }

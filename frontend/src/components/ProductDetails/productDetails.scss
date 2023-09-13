@@ -21,7 +21,7 @@
     justify-content: center;
     width: 100%;
     position: relative;
-    
+
     .thumbnails {
       height: auto;
       overflow-y: scroll;
@@ -29,7 +29,7 @@
       flex-direction: row;
       width: 100%;
       justify-content: space-between;
-      
+
       img {
         cursor: pointer;
         margin: 1em;
@@ -85,9 +85,10 @@
         color: $dark-gray-color;
         font-size: 1em;
         font-weight: 400;
-        white-space: pre-wrap;  
-        margin: 0;  
+        white-space: pre-wrap;
+        margin: 0;
       }
+
       b {
         align-items: center;
         display: flex;

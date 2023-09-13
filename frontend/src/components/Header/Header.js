@@ -1,23 +1,23 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { formatQueryString } from '../../utils/formatQuery'
+import { useNavigate } from 'react-router-dom'
 import './header.scss'
 import searchIcon from '../../public/assets/search.png'
 import logoML from '../../public/assets/ml.png'
-import { formatQueryString } from '../../utils/formatQuery';
-import getProducts from '../../utils/getProducts';
+import getProducts from '../../utils/getProducts'
 
-const Header = ({ onSearchChange, querySearch, setProducts, setIsLoading, setCategories }) => {
+const Header = ({ event, updateEvent, onSearchChange }) => {
   const navigate = useNavigate()
 
   const handleSearch = async (ev) => {
     ev.preventDefault()
-    setIsLoading(true)
+    updateEvent({ isLoading: true })
 
-    getProducts(querySearch).then(res => {
-      navigate(`/items?search=${formatQueryString(querySearch)}`)
-      setCategories(res.data.categories)
-      setProducts(res.data.items)
-      setIsLoading(false)
+    getProducts(event.querySearch).then(res => {
+      navigate(`/items?search=${formatQueryString(event.querySearch)}`)
+      updateEvent({ categories: res.data.categories })
+      updateEvent({ products: res.data.items })
+      updateEvent({ isLoading: false })
     }).catch(error => {
       console.error(error)
     })
@@ -31,16 +31,24 @@ const Header = ({ onSearchChange, querySearch, setProducts, setIsLoading, setCat
         </a>
       </div>
       <div className='header_form__container'>
-        <form method='GET' role='search' onSubmit={(ev) => handleSearch(ev)} action='/items'>
+        <form
+          method='GET'
+          role='search'
+          onSubmit={(ev) => handleSearch(ev)}
+          action='/items'
+        >
           <input
             type='text'
             aria-label='Ingresa lo que quieras encontrar'
             placeholder='Buscar productos, marcas y más…'
             onChange={onSearchChange}
-            value={querySearch}
+            value={event.querySearch}
           />
           <button type='submit'>
-            <img src={searchIcon} alt='Mercado Libre México - Buscar productos' />
+            <img
+              src={searchIcon}
+              alt='Mercado Libre México - Buscar productos'
+            />
           </button>
         </form>
       </div>
