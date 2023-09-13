@@ -6,7 +6,7 @@ import './searchResults.scss';
 import EmptySearch from '../EmptySearch/EmptySearch';
 import Loader from '../Loader/Loader';
 
-const SearchResults = ({ products, isLoading, querySearch, setProducts, setCategories }) => {
+const SearchResults = ({ products, isLoading }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const startIndex = currentPage * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
