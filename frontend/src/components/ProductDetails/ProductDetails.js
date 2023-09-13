@@ -7,7 +7,6 @@ import Loader from '../Loader/Loader';
 const ProductDetails = ({ isLoading, setIsLoading }) => {
   const { id } = useParams()
   const [product, setProduct] = useState(null)
-  const [showShortDescription, setShowShortDescription] = useState(true)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
@@ -80,7 +79,7 @@ const ProductDetails = ({ isLoading, setIsLoading }) => {
         <div>No se pudo cargar el producto.</div>
       )}
       <Description
-        {...{isLoading, product, showShortDescription, showShortDescription}}
+        {...{isLoading, product}}
       />
     </div>
   )
@@ -88,7 +87,9 @@ const ProductDetails = ({ isLoading, setIsLoading }) => {
 
 export default ProductDetails
 
-const Description = ({ showShortDescription, product, setShowShortDescription, isLoading }) => {
+const Description = ({ product, isLoading }) => {
+  const [showShortDescription, setShowShortDescription] = useState(true)
+
   return (
     <div className='details_container__description'>
       {isLoading ? (
