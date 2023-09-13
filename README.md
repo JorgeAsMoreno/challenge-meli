@@ -1,10 +1,8 @@
 # challenge-meli
 
-## Levantar el proyecto
+## Configuracion del proyecto
 Para levantar el proyecto es necesario seguir los siguientes pasos
 
 - Hacer un `npm install` en la raiz del proyecto y dentro de la carpeta frontend
-- Levantar el servidor ingresando a la carpeta backend y correr `node server.js`
-- Levantar el cliente ingresando a la carpeta frontend y correr `npm start`
+- Una vez instalad las dependencias para levantar el proyecto tenemos que correr el siguiente comando `npm start` en la raiz del proyecto
 
-Al levantar el proyecto de frontend hara una pregunta sobre si queremos levantarlo en otro puerto basta con darle que si
